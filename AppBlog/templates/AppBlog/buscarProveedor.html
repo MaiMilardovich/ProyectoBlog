@@ -1,0 +1,32 @@
+{% extends "AppBlog/padreBusqueda.html" %}
+
+{% load static %}
+
+
+{% block titulo %} 
+
+<h1>Proveedores ... hay miles!</h1>
+
+{% endblock %}  
+
+
+{% block subtitulo %} 
+
+<h3> Todo lo que se te ocurra: make up, fotos, deco y más</h3>
+
+{% endblock %}  
+
+
+{% block cuerpo %}
+
+<BODY BACKGROUND="{% static 'AppBlog/assets/img/foto.jpg' %}"></BODY>
+<form action="/AppBlog/BuscandoProveedor/" method="GET">
+
+    <input type="text" name="tipo" id="tipo">
+
+    <input type="submit" value="Buscar">
+
+</form>                    
+
+
+{% endblock %}

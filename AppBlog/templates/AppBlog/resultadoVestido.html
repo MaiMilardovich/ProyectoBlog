@@ -1,0 +1,29 @@
+{% extends "AppBlog/padreBusqueda.html" %}
+
+{% load static %}
+
+
+{% block titulo %} 
+
+<h1><p>Estas buscando vestidos con un estilo: </p></h1>
+
+{% endblock %}  
+
+
+{% block subtitulo %} 
+
+<h3> {{estilo}}</h3>
+
+{% endblock %}  
+
+
+{% block cuerpo %}
+<BODY BACKGROUND="{% static 'AppBlog/assets/img/vestido2.jpg' %}"></BODY>
+{% for vestido in diseñador %}
+    <ul>
+        <li>Diseñador: {{vestido.diseñador}}</li>
+        <li>Estilo: {{vestido.estilo}}</li>
+    </ul>
+{% endfor %}                  
+
+{% endblock %} 

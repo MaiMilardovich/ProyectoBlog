@@ -1,0 +1,30 @@
+{% extends "AppBlog/padreBusqueda.html" %}
+
+{% load static %}
+
+
+{% block titulo %} 
+
+<h1><p>Estas buscando proveedores del rubro: </p></h1>
+
+{% endblock %}  
+
+
+{% block subtitulo %} 
+
+<h3> {{tipo}}</h3>
+
+{% endblock %}  
+
+
+{% block cuerpo %}
+<BODY BACKGROUND="{% static 'AppBlog/assets/img/foto.jpg' %}"></BODY>
+{% for proveedor in nombre %}
+    <ul>
+        <li>Proveedor: {{proveedor.proveedor}}</li>
+        <li>Rubro: {{proveedor.tipo}}</li>
+        <li>Contacto: {{proveedor.mail}}</li>
+    </ul>
+{% endfor %}                  
+
+{% endblock %} 

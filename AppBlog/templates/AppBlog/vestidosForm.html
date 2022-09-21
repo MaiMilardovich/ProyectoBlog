@@ -1,0 +1,33 @@
+{% extends "AppBlog/padreForm.html" %}
+
+{% load static %}
+
+
+{% block titulo %} 
+
+<h1>¿Quien es tu diseñador favorito?</h1>
+
+{% endblock %}  
+
+
+{% block subtitulo %} 
+
+<h3>Comparte tus tips con nuestra comunidad</h3>
+
+{% endblock %}  
+
+
+{% block cuerpo %}
+                     
+<body>
+    <BODY BACKGROUND="{% static 'AppBlog/assets/img/flores2.jpg' %}"></BODY>
+    <form action ="" method="POST"> {% csrf_token %}
+    <table>    
+    {{form2.as_table}} 
+    </table>
+    <input type="submit" values="Compartir">  
+    </form>    
+</body>
+    
+
+{% endblock %} 

@@ -1,0 +1,34 @@
+{% extends "AppBlog/padreBusqueda.html" %}
+
+{% load static %}
+
+
+{% block titulo %} 
+
+<h1>Buscando ...... SALONES</h1>
+
+{% endblock %}  
+
+
+{% block subtitulo %} 
+
+<h3> Busca cualquier <I>ciudad</I> de Latinoamérica</h3>
+
+{% endblock %}  
+
+
+{% block cuerpo %}
+
+<BODY BACKGROUND="{% static 'AppBlog/assets/img/flores3.jpg' %}"></BODY>
+<form action="/AppBlog/BuscandoSalon/" method="GET">
+
+    <input type="text" name="ciudad" id="ciudad">
+
+    <input type="submit" value="Buscar">
+
+</form>                    
+
+
+{% endblock %} 
+
+
