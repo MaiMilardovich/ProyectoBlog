@@ -2,6 +2,11 @@ from django.shortcuts import render
 from AppBlog.models import *
 from AppBlog.forms import *
 from django.http import HttpResponse
+from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
@@ -9,27 +14,27 @@ def inicio (request):
 
     return render (request, "AppBlog/inicio.html")
 
-
+@login_required
 def lugar (request):
 
     return render (request, "AppBlog/salones.html")
 
-
+@login_required
 def vestidos (request):
 
     return render (request, "AppBlog/vestidos.html")
 
-
+@login_required
 def proveedores (request):
 
     return render (request, "AppBlog/proveedores.html")
 
-
+@login_required
 def formulariosInicio (request):
 
     return render (request, "AppBlog/padreForm.html")
 
-
+@login_required
 def formularioLugar (request):
     if request.method == "POST": #Si le doy a Enviar Informacion
         form1 = FormularioLugar (request.POST)
@@ -42,20 +47,20 @@ def formularioLugar (request):
         form1=FormularioLugar() #mostrar formulario vacio
     return render(request, "AppBlog/salonesForm.html", {"form1":form1}) # Apenas entro al URL
 
-
+@login_required
 def formularioVestidos (request):
     if request.method == "POST": #Si le doy a Enviar Informacion
-        form2 = FormularioVestidos (request.POST)
+        form2 = FormularioVestidos (request.POST , request.FILES)
         if form2.is_valid(): # comprobar que no hay errores
             info = form2.cleaned_data
-            vestidoF = Vestidos(diseñador=info["diseñador"], estilo=info["estilo"]) #lee la info de las cajas de texto (s/ cada formulario)
+            vestidoF = Vestidos(diseñador=info["diseñador"], estilo=info["estilo"], imagen=info["imagen"] ) #lee la info de las cajas de texto (s/ cada formulario)
             vestidoF.save() # guarda los datos en la base de datos
             return render(request, "AppBlog/inicio.html") # vuelve a mostrar lo que le digo dps de darle enviar a la info
     else:
         form2=FormularioVestidos() #mostrar formulario vacio
     return render(request, "AppBlog/vestidosForm.html", {"form2":form2}) # Apenas entro al URL
 
-
+@login_required
 def formularioProveedores (request):
     if request.method == "POST": #Si le doy a Enviar Informacion
         form3 = FormularioProveedor (request.POST)
@@ -68,17 +73,17 @@ def formularioProveedores (request):
         form3=FormularioProveedor() #mostrar formulario vacio
     return render(request, "AppBlog/proveedorForm.html", {"form3":form3}) # Apenas entro al URL
 
-
+@login_required
 def busquedas (request):
 
     return render (request, "AppBlog/padreBusqueda.html")
 
-
+@login_required
 def buscarSalon (request):
 
     return render (request, "AppBlog/buscarSalon.html")
 
-
+@login_required
 def buscandoSalon (request):
 
     if request.GET["ciudad"]:
@@ -94,12 +99,12 @@ def buscandoSalon (request):
 
     return HttpResponse (mensaje)
 
-
+@login_required
 def buscarVestido (request):
 
     return render (request, "AppBlog/buscarVestido.html")
 
-
+@login_required
 def buscandoVestido (request):
 
     if request.GET["estilo"]:
@@ -115,12 +120,12 @@ def buscandoVestido (request):
 
     return HttpResponse (mensaje)
 
-
+@login_required
 def buscarProveedor (request):
 
     return render (request, "AppBlog/buscarProveedor.html")
 
-
+@login_required
 def buscandoProveedor (request):
 
     if request.GET["tipo"]:
@@ -135,3 +140,88 @@ def buscandoProveedor (request):
         mensaje = "Regrese atras e ingrese un dato para buscar"
 
     return HttpResponse (mensaje)
+
+
+#Iniciar sesion
+
+def iniciar_sesion(request):
+
+    if request.method == "POST": #Click al boton inciiar sesion
+
+        form =  AuthenticationForm (request, data=request.POST)
+
+        if form.is_valid(): # comprobar que no hay errores
+
+            usuario = form.cleaned_data.get("username")
+            contraseña = form.cleaned_data.get("password")
+
+            user = authenticate(username=usuario , password=contraseña)
+
+            if user: # usuario existe 
+
+                login(request, user)
+
+                return render(request, "AppBlog/inicio.html" , {"mensaje":f" Bienvenida Bride to be: {user}"})
+
+        else: #datos incorrectos
+
+            return render(request, "AppBlog/inicio.html" , {"mensaje": f"Datos incorrectos. Vuelva a intentarlo"})
+
+    else: 
+
+        form = AuthenticationForm ()
+
+    return render (request, "AppBlog/login.html", {"form": form})
+
+
+def registro(request):
+
+    if request.method == "POST":
+
+        form = FormularioRegistro(request.POST)
+
+        # form = UserCreationForm(request.POST) --> ANTES DE CREAR UN FORM EN froms.py
+
+        if form.is_valid():
+
+            nombreUsuario = form.cleaned_data["username"]
+
+            form.save()
+
+            return render (request, "AppBlog/inicio.html" , {"mensaje":f"Bride to be {nombreUsuario} creada"})
+
+    else:
+
+        form = FormularioRegistro()
+        # form = UserCreationForm() --> ANTES DE CREAR UN FORM EN froms.py
+    
+    return render(request, "AppBlog/registro.html", {"form" : form})
+
+
+@login_required # No puedo editar el usuario si no inicia sesion
+def editarUsuario(request):
+
+    usuario = request.user # Para saber que usuario esta conectado
+
+    if request.method == "POST": # si le doy clik al boton editar
+       
+        formeditar = FormularioRegistro (request.POST)
+
+        if formeditar.is_valid(): # comprobar que no hay errores
+
+            info = formeditar.cleaned_data
+            
+            usuario.username = info["username"] 
+            usuario.email = info["email"] 
+            usuario.password1 = info["password1"]
+            usuario.password2 = info["password2"] 
+
+            usuario.save()
+
+            return render(request, "AppBlog/inicio.html") 
+
+    else:
+
+        formeditar=FormularioRegistro(initial= {"username":usuario.username,"email": usuario.email }) 
+    
+    return render(request, "AppBlog/editarUsuario.html", {"formeditar":formeditar, "usuario": usuario })

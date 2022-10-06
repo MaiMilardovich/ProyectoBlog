@@ -5,6 +5,7 @@
 
 {% block titulo %} 
 
+{{mensaje}}
 <h1><I>En éste día tan especial</I></h1>
 
 {% endblock %}  
@@ -15,6 +16,14 @@
 <h3>Los mejores <U>TIPS</U> para organizar tu casamiento</h3>
 
 {% endblock %}  
+
+{% block botones %}
+
+<a class="btn btn-primary btn-xl rounded-pill mt-5" href="{% url 'Salones' %}">Salones</a>
+<a class="btn btn-primary btn-xl rounded-pill mt-5" href="{% url 'Vestidos' %}">Vestidos</a>
+<a class="btn btn-primary btn-xl rounded-pill mt-5" href="{% url 'Proveedores' %}">Proveedores</a>
+
+{% endblock %} 
 
 {% block cuerpo %}
                      

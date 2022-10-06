@@ -24,8 +24,22 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
+
+                        {% if request.user.is_authenticated %}
+
                         <li class="nav-item"><a class="nav-link" href="{% url 'Formularios' %}">Comparte tips</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'Busquedas' %}">Buscar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'EditarUsuario' %}">Actualizar mis datos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Logout' %}">Cerrar sesión</a></li>
+
+                        {% else %}
+
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Login' %}">Iniciar sesión</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Registro' %}">Registrarse</a></li>
+                    
+
+                        {% endif %}
+
                     </ul>
                 </div>
             </div>
@@ -46,6 +60,7 @@
                         {% block subtitulo %}
                         
                         {% endblock %} 
+
 
                     </h2>
                     <a class="btn btn-primary btn-xl rounded-pill mt-5" href="{% url 'BuscarSalon' %}">Buscar Salones</a>

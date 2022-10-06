@@ -1,0 +1,35 @@
+{% extends "AppBlog/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo %} 
+
+
+
+{% endblock %}  
+
+
+{% block subtitulo %} 
+
+Se esta por editar el usuario {{usuario}}
+
+{% endblock %}  
+
+{% block cuerpo %}
+                     
+
+<form action ="" method="POST"> {% csrf_token %}
+
+    <table>    
+    {{formeditar.as_table}}
+    </table>
+    
+    
+    <input type="submit" values="Enviar">
+    
+    
+    </form>
+
+
+{% endblock %} 

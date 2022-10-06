@@ -14,6 +14,7 @@ class Vestidos (models.Model):
 
     diseñador = models.CharField(max_length=60)
     estilo = models.CharField(max_length=60)
+    imagen = models.ImageField(upload_to="vestidos", null=True, blank=True)
 
 
 class Proveedores (models.Model):
