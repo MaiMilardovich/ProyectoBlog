@@ -29,11 +29,23 @@
 
 En ésta sección encontraras diseñadores con diferentes estilos y diseños para que puedas inspirarte y crear tu <B><I> VESTIDO PERFECTO</B></I></7I>
 
+{% for vestido in resultado %}
+    <ul>
+        <li>Autor: {{vestido.autor}}</li>
+        <li>Diseñador: {{vestido.diseñador}}</li>
+        <li>Estilo: {{vestido.estilo}}</li>
+        <li>Fecha de Carga: {{vestido.fechaCarga}}</li>
+        {% if vestido.imagen %}
+        <img src = "{{vestido.imagen.url}}" >
+        {% endif %}
+
+       <button><a href="{% url 'EditarVestidos' vestido.diseñador %}" > Editar </a> </button>
+       <button><a href="{% url 'BorrarVestido' vestido.id %}" > Borrar </a> </button>
+
+
+    </ul>
+{% endfor %} 
 
 {% endblock %} 
 
-{% block imagen %}
 
-<div class="p-5"><img class="img-fluid rounded-circle" src="{% static 'AppBlog/assets/img/vestido.jpg' %}" alt="..." /></div>
-
-{% endblock %} 

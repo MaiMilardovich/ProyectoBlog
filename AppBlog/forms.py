@@ -11,8 +11,10 @@ class FormularioLugar (forms.Form):
 
 class FormularioVestidos (forms.Form):
 
+    autor = forms.CharField()
     diseñador = forms.CharField()
     estilo = forms.CharField()
+    fecha = forms.DateField()
     imagen = forms.ImageField()
 
 

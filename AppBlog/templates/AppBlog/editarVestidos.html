@@ -1,0 +1,33 @@
+{% extends "AppBlog/padreForm.html" %}
+
+{% load static %}
+
+
+{% block titulo %} 
+
+<h1>¿Quieres modificar los datos compartidos?</h1>
+
+{% endblock %}  
+
+
+{% block subtitulo %} 
+
+<h3>Edite los siguientes datos según corresponda </h3>
+
+{% endblock %}  
+
+
+{% block cuerpo %}
+                     
+<body>
+    <BODY BACKGROUND="{% static 'AppBlog/assets/img/flores2.jpg' %}"></BODY>
+    <form action ="" enctype="multipart/form-data" method="POST"> {% csrf_token %}
+    <table>    
+    {{formulario.as_table}} 
+    </table>
+    <input type="submit" values="Compartir">  
+    </form>    
+</body>
+    
+
+{% endblock %} 

@@ -1,0 +1,31 @@
+{% extends "AppBlog/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo %} 
+
+<h1>Esta por borrar el diseñador</h1>
+
+{% endblock %}  
+
+
+{% block subtitulo %} 
+
+<h3>¿Está seguro?</h3>
+
+{% endblock %}  
+
+
+{% block cuerpo %}
+                     
+
+<form action="" method="POST"> {% csrf_token %}
+
+    <p> Estás seguro que desear borrar {{vestidos.diseñador}} ? </p>
+    
+    <button type="submit"> Confirmar </button>   
+
+</form>
+
+{% endblock %} 

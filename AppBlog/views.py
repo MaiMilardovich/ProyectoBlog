@@ -6,6 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -13,6 +15,11 @@ from django.contrib.auth.decorators import login_required
 def inicio (request):
 
     return render (request, "AppBlog/inicio.html")
+
+def aboutus (request):
+
+    return render (request, "AppBlog/aboutUs.html")
+
 
 @login_required
 def lugar (request):
@@ -22,7 +29,43 @@ def lugar (request):
 @login_required
 def vestidos (request):
 
-    return render (request, "AppBlog/vestidos.html")
+    diseñadores = Vestidos.objects.all()
+
+    return render (request, "AppBlog/vestidos.html" , {"resultado" : diseñadores})
+
+@login_required
+def editarVestidos (request, diseñadorNombre):
+
+    diseñador = Vestidos.objects.get(diseñador=diseñadorNombre)
+
+    if request.method == "POST":
+       
+        formularioEditar = FormularioVestidos (request.POST , request.FILES)
+
+        if formularioEditar.is_valid(): # comprobar que no hay errores
+
+            info = formularioEditar.cleaned_data
+
+            diseñador.autor = info["autor"]
+            diseñador.diseñador = info["diseñador"] #actualizar la info antigua por la que aparece en la caja de texto
+            diseñador.estilo = info["estilo"] #Entre [] corresponde al form 
+            diseñador.fechaCarga = info["fecha"]
+            diseñador.imagen = info["imagen"]
+            
+            diseñador.save()
+
+            return render(request, "AppBlog/inicio.html") # vuelve a mostrar lo que le digo dps de darle enviar a la info
+
+    else:
+
+        formularioEditar=FormularioVestidos(initial= {"diseñador": diseñador.diseñador , "estilo":diseñador.estilo}) #mostrar formulario con los datos (ya no vacio)
+    
+    return render(request, "AppBlog/editarVestidos.html", {"formulario":formularioEditar, "diseñadorNombre": diseñadorNombre })
+
+class VestidoBorrar(DeleteView, LoginRequiredMixin):
+    model= Vestidos
+    success_url = "/AppBlog/"
+
 
 @login_required
 def proveedores (request):
@@ -111,8 +154,9 @@ def buscandoVestido (request):
         
         estilo = request.GET["estilo"]
         diseñador = Vestidos.objects.filter(estilo__icontains=estilo)
+        imagen = Vestidos.objects.filter(estilo__icontains=estilo)
 
-        return render(request, "AppBlog/resultadoVestido.html" , {"diseñador": diseñador   , "estilo": estilo})
+        return render(request, "AppBlog/resultadoVestido.html" , {"diseñador": diseñador   , "estilo": estilo , "imagen": imagen})
 
     else:
 
@@ -173,6 +217,7 @@ def iniciar_sesion(request):
 
     return render (request, "AppBlog/login.html", {"form": form})
 
+#Registrar nuevo usuario
 
 def registro(request):
 
@@ -197,6 +242,7 @@ def registro(request):
     
     return render(request, "AppBlog/registro.html", {"form" : form})
 
+# Modificar usuario existente
 
 @login_required # No puedo editar el usuario si no inicia sesion
 def editarUsuario(request):
@@ -225,3 +271,4 @@ def editarUsuario(request):
         formeditar=FormularioRegistro(initial= {"username":usuario.username,"email": usuario.email }) 
     
     return render(request, "AppBlog/editarUsuario.html", {"formeditar":formeditar, "usuario": usuario })
+

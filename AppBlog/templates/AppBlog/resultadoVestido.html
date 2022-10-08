@@ -23,6 +23,11 @@
     <ul>
         <li>Diseñador: {{vestido.diseñador}}</li>
         <li>Estilo: {{vestido.estilo}}</li>
+        {% if vestido.imagen %}
+        <img src = "{{vestido.imagen.url}}" >
+        {% endif %}
+    
+        
 
     </ul>
 {% endfor %}                  
