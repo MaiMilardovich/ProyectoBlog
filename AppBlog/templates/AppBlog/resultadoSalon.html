@@ -19,12 +19,21 @@
 
 {% block cuerpo %}
 <BODY BACKGROUND="{% static 'AppBlog/assets/img/flores3.jpg' %}"></BODY>
+
+{% if nombre %}
+
 {% for salon in nombre %}
     <ul>
         <li>Salon: {{salon.nombre}}</li>
         <li>Ciudad: {{salon.ciudad}}</li>
     </ul>
-{% endfor %}                  
+{% endfor %}  
+
+{% else %}
+
+<p>No hay salones cargados en {{ciudad}}.</p>
+
+{% endif %}
 
 {% endblock %} 
 

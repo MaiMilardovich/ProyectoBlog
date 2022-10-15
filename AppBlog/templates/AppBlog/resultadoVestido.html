@@ -19,6 +19,9 @@
 
 {% block cuerpo %}
 <BODY BACKGROUND="{% static 'AppBlog/assets/img/vestido2.jpg' %}"></BODY>
+
+{% if estilo %}
+
 {% for vestido in diseñador %}
     <ul>
         <li>Diseñador: {{vestido.diseñador}}</li>
@@ -26,10 +29,14 @@
         {% if vestido.imagen %}
         <img src = "{{vestido.imagen.url}}" >
         {% endif %}
-    
-        
 
     </ul>
 {% endfor %}                  
+
+{% else %}
+
+<p>No hay diseñadores cargados para el estilo {{estilo}}.</p>
+
+{% endif %}
 
 {% endblock %} 

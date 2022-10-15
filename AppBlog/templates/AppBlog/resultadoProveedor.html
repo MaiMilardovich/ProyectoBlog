@@ -19,6 +19,9 @@
 
 {% block cuerpo %}
 <BODY BACKGROUND="{% static 'AppBlog/assets/img/foto.jpg' %}"></BODY>
+
+{% if nombre %}
+
 {% for proveedor in nombre %}
     <ul>
         <li>Proveedor: {{proveedor.proveedor}}</li>
@@ -26,5 +29,11 @@
         <li>Contacto: {{proveedor.mail}}</li>
     </ul>
 {% endfor %}                  
+
+{% else %}
+
+<p>No hay proveedores cargados en el rubro {{tipo}}.</p>
+
+{% endif %}
 
 {% endblock %} 
