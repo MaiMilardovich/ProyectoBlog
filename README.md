@@ -1,14 +1,14 @@
-# ProyectoBlog
+# ProyectoBlog - Wedding Planner ON-LINE
 
-La página de inicio del blog es /AppBlog. Allí se puede ver una página inicial con 3 botones rosas. 
-En cada botón se podrá leer un breve resumen de lo que se encuentra en dicho rubro. 
+Participantes del equipo de trabajo del proyecto: 
 
-En la parte superior tengo a la derecha 2 botones. "Comparte Tips" y "Buscar" 
+FRANCO DENTIS - 
+MERCEDES CONTINI - 
+MAIA MILARDOVICH
 
-Si selecciono sobre "Comparte Tips" podré ingresar datos de salones - provedoores y vestidos. Debo hacer click sobre el boton rosa del rubro que quiero compartir informacion. 
 
-Si selecciono sobre "Buscar", el funcionamiento es el mismo. Tengo un botón por cada rubro y podré buscar info sobre dichos rubros. 
+El blog es para toda persona que se encuentre preparando ese día tan especial - su casamiento! 
 
-Si hago click sobre "Wedding Planner on-line" me llevará nuevamente a la página de inicio. 
+El blog fue creado a partir de diferentes reuniones del equipo, conectados de manera virtual utilizando la plataforma Google Meet. 
+Se llevaron a cabo 6 reuniones, en las cuales se fue dando forma a este proyecto con el aporte de los conocimientos de los participantes del equipo de manera conjunta. 
 
-Una aclaración: readme quedo sobre la rama MAIN - pero el proyecyo esta guardado como rama MASTER. 
