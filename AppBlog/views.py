@@ -96,7 +96,7 @@ def formularioVestidos (request):
         form2 = FormularioVestidos (request.POST , request.FILES)
         if form2.is_valid(): # comprobar que no hay errores
             info = form2.cleaned_data
-            vestidoF = Vestidos(diseñador=info["diseñador"], estilo=info["estilo"], imagen=info["imagen"] ) #lee la info de las cajas de texto (s/ cada formulario)
+            vestidoF = Vestidos(autor=info["autor"], diseñador=info["diseñador"], estilo=info["estilo"], imagen=info["imagen"] ) #lee la info de las cajas de texto (s/ cada formulario)
             vestidoF.save() # guarda los datos en la base de datos
             return render(request, "AppBlog/inicio.html") # vuelve a mostrar lo que le digo dps de darle enviar a la info
     else:
